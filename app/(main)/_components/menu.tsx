@@ -19,17 +19,17 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 interface MenuProps {
-  documentId: Id<"documents">;
+  hubId: Id<"hubs">;
 }
 
-export const Menu = ({ documentId }: MenuProps) => {
+export const Menu = ({ hubId }: MenuProps) => {
   const router = useRouter();
   const { user } = useUser();
 
-  const archive = useMutation(api.documents.archive);
+  const archive = useMutation(api.hubs.archive);
 
   const onArchive = () => {
-    const promise = archive({ id: documentId });
+    const promise = archive({ id: hubId });
 
     toast.promise(promise, {
       loading: "Moving to trash...",
@@ -37,7 +37,7 @@ export const Menu = ({ documentId }: MenuProps) => {
       error: "Failed to archive note.",
     });
 
-    router.push("/documents");
+    router.push("/hubs");
   };
 
   return (

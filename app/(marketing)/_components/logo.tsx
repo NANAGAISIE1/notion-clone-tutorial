@@ -1,8 +1,6 @@
 import { Poppins } from "next/font/google";
 import Image from "next/image";
 
-import { cn } from "@/lib/utils";
-
 const font = Poppins({
   subsets: ["latin"],
   weight: ["400", "600"],
@@ -12,20 +10,33 @@ export const Logo = () => {
   return (
     <div className="hidden md:flex items-center gap-x-2">
       <Image
-        src="/logo.svg"
-        height="40"
-        width="40"
+        src="/logo/transparent-background/short-logo-dark.svg"
+        height="60"
+        width="60"
         alt="Logo"
-        className="dark:hidden"
+        className="dark:hidden lg:hidden"
       />
       <Image
-        src="/logo-dark.svg"
-        height="40"
-        width="40"
+        src="/logo/transparent-background/short-logo.svg"
+        height="60"
+        width="60"
         alt="Logo"
-        className="hidden dark:block"
+        className="hidden dark:block lg:hidden lg:dark:hidden"
       />
-      <p className={cn("font-semibold", font.className)}>Jotion</p>
+      <Image
+        src="/logo/transparent-background/long-logo-dark.svg"
+        height="150"
+        width="150"
+        alt="Logo"
+        className="hidden lg:dark:hidden lg:block"
+      />
+      <Image
+        src="/logo/transparent-background/long-logo.svg"
+        height="170"
+        width="170"
+        alt="Logo"
+        className="hidden lg:dark:block lg:block"
+      />
     </div>
   );
 };

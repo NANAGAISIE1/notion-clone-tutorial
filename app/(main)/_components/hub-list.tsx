@@ -11,36 +11,33 @@ import { cn } from "@/lib/utils";
 
 import { Item } from "./item";
 
-interface DocumentListProps {
-  parentDocumentId?: Id<"documents">;
+interface HubListProps {
+  parentHubId?: Id<"hubs">;
   level?: number;
-  data?: Doc<"documents">[];
+  data?: Doc<"hubs">[];
 }
 
-export const DocumentList = ({
-  parentDocumentId,
-  level = 0,
-}: DocumentListProps) => {
+export const HubList = ({ parentHubId, level = 0 }: HubListProps) => {
   const params = useParams();
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
-  const onExpand = (documentId: string) => {
+  const onExpand = (hubId: string) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
-      [documentId]: !prevExpanded[documentId],
+      [hubId]: !prevExpanded[hubId],
     }));
   };
 
-  const documents = useQuery(api.documents.getSidebar, {
-    parentDocument: parentDocumentId,
+  const hubs = useQuery(api.hubs.getSidebar, {
+    parentHub: parentHubId,
   });
 
-  const onRedirect = (documentId: string) => {
-    router.push(`/documents/${documentId}`);
+  const onRedirect = (hubId: string) => {
+    router.push(`/hubs/${hubId}`);
   };
 
-  if (documents === undefined) {
+  if (hubs === undefined) {
     return (
       <>
         <Item.Skeleton level={level} />
@@ -68,21 +65,21 @@ export const DocumentList = ({
       >
         No pages inside
       </p>
-      {documents.map((document) => (
-        <div key={document._id}>
+      {hubs.map((hub) => (
+        <div key={hub._id}>
           <Item
-            id={document._id}
-            onClick={() => onRedirect(document._id)}
-            label={document.title}
+            id={hub._id}
+            onClick={() => onRedirect(hub._id)}
+            label={hub.title}
             icon={FileIcon}
-            documentIcon={document.icon}
-            active={params.documentId === document._id}
+            hubIcon={hub.icon}
+            active={params.hubId === hub._id}
             level={level}
-            onExpand={() => onExpand(document._id)}
-            expanded={expanded[document._id]}
+            onExpand={() => onExpand(hub._id)}
+            expanded={expanded[hub._id]}
           />
-          {expanded[document._id] && (
-            <DocumentList parentDocumentId={document._id} level={level + 1} />
+          {expanded[hub._id] && (
+            <HubList parentHubId={hub._id} level={level + 1} />
           )}
         </div>
       ))}

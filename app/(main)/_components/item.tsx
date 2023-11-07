@@ -26,8 +26,8 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 
 interface ItemProps {
-  id?: Id<"documents">;
-  documentIcon?: string;
+  id?: Id<"hubs">;
+  hubIcon?: string;
   active?: boolean;
   expanded?: boolean;
   isSearch?: boolean;
@@ -44,7 +44,7 @@ export const Item = ({
   onClick,
   icon: Icon,
   active,
-  documentIcon,
+  hubIcon,
   isSearch,
   level = 0,
   onExpand,
@@ -52,13 +52,13 @@ export const Item = ({
 }: ItemProps) => {
   const { user } = useUser();
   const router = useRouter();
-  const create = useMutation(api.documents.create);
-  const archive = useMutation(api.documents.archive);
+  const create = useMutation(api.hubs.create);
+  const archive = useMutation(api.hubs.archive);
 
   const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = archive({ id }).then(() => router.push("/documents"));
+    const promise = archive({ id }).then(() => router.push("/hubs"));
 
     toast.promise(promise, {
       loading: "Moving to trash...",
@@ -77,12 +77,12 @@ export const Item = ({
   const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = create({ title: "Untitled", parentDocument: id }).then(
-      (documentId) => {
+    const promise = create({ title: "Untitled", parentHub: id }).then(
+      (hubId) => {
         if (!expanded) {
           onExpand?.();
         }
-        router.push(`/documents/${documentId}`);
+        router.push(`/hubs/${hubId}`);
       },
     );
 
@@ -117,8 +117,8 @@ export const Item = ({
           <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
         </div>
       )}
-      {documentIcon ? (
-        <div className="shrink-0 mr-2 text-[18px]">{documentIcon}</div>
+      {hubIcon ? (
+        <div className="shrink-0 mr-2 text-[18px]">{hubIcon}</div>
       ) : (
         <Icon className="shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground" />
       )}

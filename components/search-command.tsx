@@ -20,7 +20,7 @@ import { useSearch } from "@/hooks/use-search";
 export const SearchCommand = () => {
   const { user } = useUser();
   const router = useRouter();
-  const documents = useQuery(api.documents.getSearch);
+  const hubs = useQuery(api.hubs.getSearch);
   const [isMounted, setIsMounted] = useState(false);
 
   const toggle = useSearch((store) => store.toggle);
@@ -44,7 +44,7 @@ export const SearchCommand = () => {
   }, [toggle]);
 
   const onSelect = (id: string) => {
-    router.push(`/documents/${id}`);
+    router.push(`/hubs/${id}`);
     onClose();
   };
 
@@ -57,20 +57,20 @@ export const SearchCommand = () => {
       <CommandInput placeholder={`Search ${user?.fullName}'s Jotion...`} />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Documents">
-          {documents?.map((document) => (
+        <CommandGroup heading="Hubs">
+          {hubs?.map((hub) => (
             <CommandItem
-              key={document._id}
-              value={`${document._id}-${document.title}`}
-              title={document.title}
-              onSelect={() => onSelect(document._id)}
+              key={hub._id}
+              value={`${hub._id}-${hub.title}`}
+              title={hub.title}
+              onSelect={() => onSelect(hub._id)}
             >
-              {document.icon ? (
-                <p className="mr-2 text-[18px]">{document.icon}</p>
+              {hub.icon ? (
+                <p className="mr-2 text-[18px]">{hub.icon}</p>
               ) : (
                 <File className="mr-2 h-4 w-4" />
               )}
-              <span>{document.title}</span>
+              <span>{hub.title}</span>
             </CommandItem>
           ))}
         </CommandGroup>

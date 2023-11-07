@@ -15,26 +15,26 @@ import { Id } from "@/convex/_generated/dataModel";
 export const TrashBox = () => {
   const router = useRouter();
   const params = useParams();
-  const documents = useQuery(api.documents.getTrash);
-  const restore = useMutation(api.documents.restore);
-  const remove = useMutation(api.documents.remove);
+  const hubs = useQuery(api.hubs.getTrash);
+  const restore = useMutation(api.hubs.restore);
+  const remove = useMutation(api.hubs.remove);
 
   const [search, setSearch] = useState("");
 
-  const filteredDocuments = documents?.filter((document) => {
-    return document.title.toLowerCase().includes(search.toLowerCase());
+  const filteredHubs = hubs?.filter((hub) => {
+    return hub.title.toLowerCase().includes(search.toLowerCase());
   });
 
-  const onClick = (documentId: string) => {
-    router.push(`/documents/${documentId}`);
+  const onClick = (hubId: string) => {
+    router.push(`/hubs/${hubId}`);
   };
 
   const onRestore = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    documentId: Id<"documents">,
+    hubId: Id<"hubs">,
   ) => {
     event.stopPropagation();
-    const promise = restore({ id: documentId });
+    const promise = restore({ id: hubId });
 
     toast.promise(promise, {
       loading: "Restoring note...",
@@ -43,8 +43,8 @@ export const TrashBox = () => {
     });
   };
 
-  const onRemove = (documentId: Id<"documents">) => {
-    const promise = remove({ id: documentId });
+  const onRemove = (hubId: Id<"hubs">) => {
+    const promise = remove({ id: hubId });
 
     toast.promise(promise, {
       loading: "Deleting note...",
@@ -52,12 +52,12 @@ export const TrashBox = () => {
       error: " Failed to delete note.",
     });
 
-    if (params.documentId === documentId) {
-      router.push("/documents");
+    if (params.hubId === hubId) {
+      router.push("/hubs");
     }
   };
 
-  if (documents === undefined) {
+  if (hubs === undefined) {
     return (
       <div className="h-full flex items-center justify-center p-4">
         <Spinner size="lg" />
@@ -78,25 +78,25 @@ export const TrashBox = () => {
       </div>
       <div className="mt-2 px-1 pb-1">
         <p className="hidden last:block text-xs text-center text-muted-foreground pb-2">
-          No documents found.
+          No hubs found.
         </p>
-        {filteredDocuments?.map((document) => (
+        {filteredHubs?.map((hub) => (
           <div
-            key={document._id}
+            key={hub._id}
             role="button"
-            onClick={() => onClick(document._id)}
+            onClick={() => onClick(hub._id)}
             className="text-sm rounded-sm w-full hover:bg-primary/5 flex items-center text-primary justify-between"
           >
-            <span className="truncate pl-2">{document.title}</span>
+            <span className="truncate pl-2">{hub.title}</span>
             <div className="flex items-center">
               <div
-                onClick={(e) => onRestore(e, document._id)}
+                onClick={(e) => onRestore(e, hub._id)}
                 role="button"
                 className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
               >
                 <Undo className="h-4 w-4 text-muted-foreground" />
               </div>
-              <ConfirmModal onConfirm={() => onRemove(document._id)}>
+              <ConfirmModal onConfirm={() => onRemove(hub._id)}>
                 <div
                   role="button"
                   className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"

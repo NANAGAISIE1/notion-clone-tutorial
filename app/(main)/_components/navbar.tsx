@@ -20,11 +20,11 @@ interface NavbarProps {
 export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
   const params = useParams();
 
-  const document = useQuery(api.documents.getById, {
-    documentId: params.documentId as Id<"documents">,
+  const hub = useQuery(api.hubs.getById, {
+    hubId: params.hubId as Id<"hubs">,
   });
 
-  if (document === undefined) {
+  if (hub === undefined) {
     return (
       <nav className="bg-background dark:bg-[#1F1F1F] px-3 py-2 w-full flex items-center justify-between">
         <Title.Skeleton />
@@ -35,7 +35,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
     );
   }
 
-  if (document === null) {
+  if (hub === null) {
     return null;
   }
 
@@ -50,14 +50,14 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
           />
         )}
         <div className="flex items-center justify-between w-full">
-          <Title initialData={document} />
+          <Title initialData={hub} />
           <div className="flex items-center gap-x-2">
-            <Publish initialData={document} />
-            <Menu documentId={document._id} />
+            <Publish initialData={hub} />
+            <Menu hubId={hub._id} />
           </div>
         </div>
       </nav>
-      {document.isArchived && <Banner documentId={document._id} />}
+      {hub.isArchived && <Banner hubId={hub._id} />}
     </>
   );
 };

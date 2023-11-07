@@ -28,20 +28,28 @@ export const Navbar = () => {
         {isLoading && <Spinner />}
         {!isAuthenticated && !isLoading && (
           <>
-            <SignInButton mode="modal">
+            <SignInButton
+              mode="modal"
+              afterSignInUrl={`${window.location.origin}/hubs`}
+              afterSignUpUrl={`${window.location.origin}/hubs`}
+            >
               <Button variant="ghost" size="sm">
                 Log in
               </Button>
             </SignInButton>
-            <SignInButton mode="modal">
-              <Button size="sm">Get Jotion free</Button>
+            <SignInButton
+              mode="modal"
+              afterSignInUrl={`${window.location.origin}/hubs`}
+              afterSignUpUrl={`${window.location.origin}/hubs`}
+            >
+              <Button size="sm">Get Student Hub free</Button>
             </SignInButton>
           </>
         )}
         {isAuthenticated && !isLoading && (
           <>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/documents">Enter Jotion</Link>
+              <Link href="/hubs">Enter Student Hub</Link>
             </Button>
             <UserButton afterSignOutUrl="/" />
           </>

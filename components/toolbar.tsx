@@ -13,7 +13,7 @@ import { useCoverImage } from "@/hooks/use-cover-image";
 import { IconPicker } from "./icon-picker";
 
 interface ToolbarProps {
-  initialData: Doc<"documents">;
+  initialData: Doc<"hubs">;
   preview?: boolean;
 }
 
@@ -22,8 +22,8 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
 
-  const update = useMutation(api.documents.update);
-  const removeIcon = useMutation(api.documents.removeIcon);
+  const update = useMutation(api.hubs.update);
+  const removeIcon = useMutation(api.hubs.removeIcon);
 
   const coverImage = useCoverImage();
 

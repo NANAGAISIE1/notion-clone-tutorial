@@ -25,7 +25,7 @@ import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { cn } from "@/lib/utils";
 
-import { DocumentList } from "./document-list";
+import { HubList } from "./hub-list";
 import { Item } from "./item";
 import { Navbar } from "./navbar";
 import { TrashBox } from "./trash-box";
@@ -38,7 +38,7 @@ export const Navigation = () => {
   const params = useParams();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const create = useMutation(api.documents.create);
+  const create = useMutation(api.hubs.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -123,8 +123,8 @@ export const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" }).then((documentId) =>
-      router.push(`/documents/${documentId}`),
+    const promise = create({ title: "Untitled" }).then((hubId) =>
+      router.push(`/hubs/${hubId}`),
     );
 
     toast.promise(promise, {
@@ -162,7 +162,7 @@ export const Navigation = () => {
           <Item onClick={handleCreate} label="New page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
-          <DocumentList />
+          <HubList />
           <Item onClick={handleCreate} icon={Plus} label="Add a page" />
           <Popover>
             <PopoverTrigger className="w-full mt-4">
@@ -190,7 +190,7 @@ export const Navigation = () => {
           isMobile && "left-0 w-full",
         )}
       >
-        {!!params.documentId ? (
+        {!!params.hubId ? (
           <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
         ) : (
           <nav className="bg-transparent px-3 py-2 w-full">

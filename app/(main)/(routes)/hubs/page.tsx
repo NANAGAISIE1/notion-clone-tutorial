@@ -10,14 +10,14 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 
-const DocumentsPage = () => {
+const HubsPage = () => {
   const router = useRouter();
   const { user } = useUser();
-  const create = useMutation(api.documents.create);
+  const create = useMutation(api.hubs.create);
 
   const onCreate = () => {
-    const promise = create({ title: "Untitled" }).then((documentId) =>
-      router.push(`/documents/${documentId}`),
+    const promise = create({ title: "Untitled" }).then((hubId) =>
+      router.push(`/hubs/${hubId}`),
     );
 
     toast.promise(promise, {
@@ -44,14 +44,14 @@ const DocumentsPage = () => {
         className="hidden dark:block"
       />
       <h2 className="text-lg font-medium">
-        Welcome to {user?.firstName}&apos;s Jotion
+        Welcome to {user?.firstName}&apos;s Hub
       </h2>
       <Button onClick={onCreate}>
         <PlusCircle className="h-4 w-4 mr-2" />
-        Create a note
+        Create a hub
       </Button>
     </div>
   );
 };
 
-export default DocumentsPage;
+export default HubsPage;

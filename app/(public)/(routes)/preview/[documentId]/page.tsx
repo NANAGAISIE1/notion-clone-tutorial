@@ -10,32 +10,32 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
-interface DocumentIdPageProps {
+interface HubIdPageProps {
   params: {
-    documentId: Id<"documents">;
+    hubId: Id<"hubs">;
   };
 }
 
-const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+const HubIdPage = ({ params }: HubIdPageProps) => {
   const Editor = useMemo(
     () => dynamic(() => import("@/components/editor"), { ssr: false }),
     [],
   );
 
-  const document = useQuery(api.documents.getById, {
-    documentId: params.documentId,
+  const hub = useQuery(api.hubs.getById, {
+    hubId: params.hubId,
   });
 
-  const update = useMutation(api.documents.update);
+  const update = useMutation(api.hubs.update);
 
   const onChange = (content: string) => {
     update({
-      id: params.documentId,
+      id: params.hubId,
       content,
     });
   };
 
-  if (document === undefined) {
+  if (hub === undefined) {
     return (
       <div>
         <Cover.Skeleton />
@@ -51,23 +51,23 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     );
   }
 
-  if (document === null) {
+  if (hub === null) {
     return <div>Not found</div>;
   }
 
   return (
     <div className="pb-40">
-      <Cover preview url={document.coverImage} />
+      <Cover preview url={hub.coverImage} />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-        <Toolbar preview initialData={document} />
+        <Toolbar preview initialData={hub} />
         <Editor
           editable={false}
           onChange={onChange}
-          initialContent={document.content}
+          initialContent={hub.content}
         />
       </div>
     </div>
   );
 };
 
-export default DocumentIdPage;
+export default HubIdPage;

@@ -16,12 +16,12 @@ import { Doc } from "@/convex/_generated/dataModel";
 import { useOrigin } from "@/hooks/use-origin";
 
 interface PublishProps {
-  initialData: Doc<"documents">;
+  initialData: Doc<"hubs">;
 }
 
 export const Publish = ({ initialData }: PublishProps) => {
   const origin = useOrigin();
-  const update = useMutation(api.documents.update);
+  const update = useMutation(api.hubs.update);
 
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

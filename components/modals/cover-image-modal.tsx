@@ -13,7 +13,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 
 export const CoverImageModal = () => {
   const params = useParams();
-  const update = useMutation(api.documents.update);
+  const update = useMutation(api.hubs.update);
   const coverImage = useCoverImage();
   const { edgestore } = useEdgeStore();
 
@@ -39,7 +39,7 @@ export const CoverImageModal = () => {
       });
 
       await update({
-        id: params.documentId as Id<"documents">,
+        id: params.hubId as Id<"hubs">,
         coverImage: res.url,
       });
 

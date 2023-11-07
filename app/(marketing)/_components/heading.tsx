@@ -15,11 +15,12 @@ export const Heading = () => {
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
         Your Ideas, Documents, & Plans. Unified. Welcome to{" "}
-        <span className="underline">Jotion</span>
+        <span className="underline">Student Hub</span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium">
-        Jotion is the connected workspace where <br />
-        better, faster work happens.
+        Student Hub is a place where{" "}
+        <span className="animate-pulse">Smarter Learning </span> <br />
+        Takes Center Stage
       </h3>
       {isLoading && (
         <div className="w-full flex items-center justify-center">
@@ -28,16 +29,20 @@ export const Heading = () => {
       )}
       {isAuthenticated && !isLoading && (
         <Button asChild>
-          <Link href="/documents">
-            Enter Jotion
+          <Link href="/hubs">
+            Enter Student Hub
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
         </Button>
       )}
       {!isAuthenticated && !isLoading && (
-        <SignInButton mode="modal">
+        <SignInButton
+          mode="modal"
+          afterSignInUrl={`${window.location.origin}/hubs`}
+          afterSignUpUrl={`${window.location.origin}/hubs`}
+        >
           <Button>
-            Get Jotion free
+            Get Student Hub free
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </SignInButton>

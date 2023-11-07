@@ -10,17 +10,17 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 interface BannerProps {
-  documentId: Id<"documents">;
+  hubId: Id<"hubs">;
 }
 
-export const Banner = ({ documentId }: BannerProps) => {
+export const Banner = ({ hubId }: BannerProps) => {
   const router = useRouter();
 
-  const remove = useMutation(api.documents.remove);
-  const restore = useMutation(api.documents.restore);
+  const remove = useMutation(api.hubs.remove);
+  const restore = useMutation(api.hubs.restore);
 
   const onRemove = () => {
-    const promise = remove({ id: documentId });
+    const promise = remove({ id: hubId });
 
     toast.promise(promise, {
       loading: "Deleting note...",
@@ -28,11 +28,11 @@ export const Banner = ({ documentId }: BannerProps) => {
       error: "Failed to delete note.",
     });
 
-    router.push("/documents");
+    router.push("/hubs");
   };
 
   const onRestore = () => {
-    const promise = restore({ id: documentId });
+    const promise = restore({ id: hubId });
 
     toast.promise(promise, {
       loading: "Restoring note...",

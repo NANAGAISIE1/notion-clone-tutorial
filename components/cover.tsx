@@ -22,7 +22,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
   const { edgestore } = useEdgeStore();
   const params = useParams();
   const coverImage = useCoverImage();
-  const removeCoverImage = useMutation(api.documents.removeCoverImage);
+  const removeCoverImage = useMutation(api.hubs.removeCoverImage);
 
   const onRemove = async () => {
     if (url) {
@@ -31,7 +31,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
       });
     }
     removeCoverImage({
-      id: params.documentId as Id<"documents">,
+      id: params.hubId as Id<"hubs">,
     });
   };
 
