@@ -2,6 +2,7 @@
 
 import { useMutation } from "convex/react";
 import { Check, Copy, Globe } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -71,9 +72,13 @@ export const Publish = ({ initialData }: PublishProps) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button size="sm" variant="ghost">
-          Publish
-          {initialData.isPublished && (
-            <Globe className="text-sky-500 w-4 h-4 ml-2" />
+          {initialData.isPublished ? (
+            <>
+              <span>Published</span>
+              <Globe className="text-sky-500 w-4 h-4 ml-2" />
+            </>
+          ) : (
+            <span>Publish</span>
           )}
         </Button>
       </PopoverTrigger>
@@ -86,24 +91,31 @@ export const Publish = ({ initialData }: PublishProps) => {
                 This note is live on web.
               </p>
             </div>
-            <div className="flex items-center">
-              <input
-                title="copy"
-                className="flex-1 px-2 text-xs border rounded-l-md h-8 bg-muted truncate"
-                value={url}
-                disabled
-              />
-              <Button
-                onClick={onCopy}
-                disabled={copied}
-                className="h-8 rounded-l-none"
-              >
-                {copied ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
-              </Button>
+            <div className="flex items-center flex-col space-y-3">
+              <div>
+                <p className="font-bold">Scan QR Code</p>
+                <QRCodeSVG value={url} />
+              </div>
+              <div>
+                {" "}
+                <input
+                  title="copy"
+                  className="flex-1 px-2 text-xs border rounded-l-md h-8 bg-muted truncate"
+                  value={url}
+                  disabled
+                />
+                <Button
+                  onClick={onCopy}
+                  disabled={copied}
+                  className="h-8 rounded-l-none"
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
             <Button
               size="sm"
