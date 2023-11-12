@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Bebas_Neue } from "next/font/google";
 import { Toaster } from "sonner";
 
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
@@ -6,12 +6,26 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { siteConfig } from "@/config/siteConfig";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
 
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+export const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+  weight: "400",
+});
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {
@@ -61,10 +75,6 @@ export const metadata: Metadata = {
       "en-GB": "/en-GB",
     },
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -131,7 +141,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={cn(inter.className, bebasNeue.variable)}>
         <ConvexClientProvider>
           <EdgeStoreProvider>
             <ThemeProvider
